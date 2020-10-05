@@ -1,21 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import store from './app/store';
+
+import store from './app/store/store';
+import client from './services/api'
+
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import { ApolloProvider } from '@apollo/client'
+
+import SummaryPage from './container/summary-page'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ApolloProvider client={ client }>
+      <Provider store={ store }>
+        <BrowserRouter>
+          <Switch>
+            <Route path='/' exact component={ SummaryPage } />
+          </Switch>
+        </BrowserRouter>
+      </Provider>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
